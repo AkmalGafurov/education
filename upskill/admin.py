@@ -6,9 +6,7 @@ from .models import (
     Text, File, Video, Image
 )
 
-# =========================
-# TEACHER
-# =========================
+
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'expertise', 'experience_years', 'is_active', 'created_at')
@@ -17,9 +15,7 @@ class TeacherAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
 
 
-# =========================
-# SUBJECT
-# =========================
+
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug')
@@ -27,9 +23,7 @@ class SubjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-# =========================
-# COURSE
-# =========================
+
 class ModuleInline(admin.StackedInline):
     model = Module
     extra = 1
@@ -44,9 +38,7 @@ class CourseAdmin(admin.ModelAdmin):
     inlines = [ModuleInline]
 
 
-# =========================
-# MODULE
-# =========================
+
 class ContentInline(GenericTabularInline):
     model = Content
     extra = 1
@@ -59,18 +51,14 @@ class ModuleAdmin(admin.ModelAdmin):
     inlines = [ContentInline]
 
 
-# =========================
-# CONTENT (Generic)
-# =========================
+
 @admin.register(Content)
 class ContentAdmin(admin.ModelAdmin):
     list_display = ('module', 'content_type', 'object_id')
     list_filter = ('content_type',)
 
 
-# =========================
-# ITEM BASE MODELS
-# =========================
+
 class ItemBaseAdmin(admin.ModelAdmin):
     list_display = ('title', 'owner', 'created_at')
     search_fields = ('title',)
