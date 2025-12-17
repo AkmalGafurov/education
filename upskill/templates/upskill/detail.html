@@ -24,51 +24,70 @@
                         
                     </div>
 
-                    <h2 class="mb-3">Related Courses</h2>
-                    <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
-                        <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
-                            <img class="img-fluid" src="img/courses-1.jpg" alt="">
-                            <div class="courses-text">
-                                <h4 class="text-center text-white px-3">Web design & development courses for
-                                    beginners</h4>
-                                <div class="border-top w-100 mt-3">
-                                    <div class="d-flex justify-content-between p-4">
-                                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5
-                                            <small>(250)</small></span>
-                                    </div>
-                                </div>
+                    <h2 class="mb-4">Modules</h2>
+
+                    <div class="accordion" id="modulesAccordion">
+                    
+                        {% for module in course.modules.all %}
+                        <div class="card mb-3">
+                    
+                            <!-- MODULE TITLE -->
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <strong>
+                                    {{ forloop.counter|stringformat:"02d" }} {{ module.title }}
+                                </strong>
+                                <small class="text-muted">
+                                    {{ module.contents.count }} ta dars
+                                </small>
                             </div>
-                        </a>
-                        <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
-                            <img class="img-fluid" src="img/courses-2.jpg" alt="">
-                            <div class="courses-text">
-                                <h4 class="text-center text-white px-3">Web design & development courses for
-                                    beginners</h4>
-                                <div class="border-top w-100 mt-3">
-                                    <div class="d-flex justify-content-between p-4">
-                                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5
-                                            <small>(250)</small></span>
+                    
+                            <!-- CONTENT LIST -->
+                            <ul class="list-group list-group-flush">
+                    
+                                {% for content in module.contents.all %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    
+                                    <div>
+                                        <!-- ICON -->
+                                        {% if content.content_type.model == 'video' %}
+                                            <i class="fa fa-play-circle text-primary mr-2"></i>
+                                        {% elif content.content_type.model == 'text' %}
+                                            <i class="fa fa-file-text text-info mr-2"></i>
+                                        {% elif content.content_type.model == 'file' %}
+                                            <i class="fa fa-file text-warning mr-2"></i>
+                                        {% elif content.content_type.model == 'image' %}
+                                            <i class="fa fa-image text-success mr-2"></i>
+                                        {% endif %}
+                    
+                                        {{ content.item.title }}
                                     </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="detail.html">
-                            <img class="img-fluid" src="img/courses-3.jpg" alt="">
-                            <div class="courses-text">
-                                <h4 class="text-center text-white px-3">Web design & development courses for
-                                    beginners</h4>
-                                <div class="border-top w-100 mt-3">
-                                    <div class="d-flex justify-content-between p-4">
-                                        <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                                        <span class="text-white"><i class="fa fa-star mr-2"></i>4.5
-                                            <small>(250)</small></span>
+                    
+                                    <div>
+                                        <!-- LOCK / VIEW -->
+                                        {% if user.is_authenticated %}
+                                            <a href="#" class="text-primary">Ko‘rish</a>
+                                        {% else %}
+                                            <i class="fa fa-lock text-muted"></i>
+                                        {% endif %}
                                     </div>
-                                </div>
-                            </div>
-                        </a>
+                    
+                                </li>
+                                {% empty %}
+                                <li class="list-group-item text-muted">
+                                    Bu modulda darslar yo‘q
+                                </li>
+                                {% endfor %}
+                    
+                            </ul>
+                    
+                        </div>
+                        {% empty %}
+                            <p>Modullar mavjud emas</p>
+                        {% endfor %}
+                    
                     </div>
+                    
+                    
                </div>
 
                 <div class="col-lg-4 mt-5 mt-lg-0">
@@ -76,7 +95,7 @@
                         <h3 class="text-white py-3 px-4 m-0">Course Features</h3>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Instructor</h6>
-                            <h6 class="text-white my-3">John Doe</h6>
+                            <h6 class="text-white my-3">{{course.owner}}</h6>
                         </div>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Rating</h6>
@@ -98,7 +117,7 @@
                             <h6 class="text-white my-3">Language</h6>
                             <h6 class="text-white my-3">English</h6>
                         </div>
-                        <h5 class="text-white py-3 px-4 m-0">Course Price: $199</h5>
+                        <h5 class="text-white py-3 px-4 m-0">Course Price: ${{course.price}}</h5>
                         <div class="py-3 px-4">
                             <a class="btn btn-block btn-secondary py-3 px-5" href="">Enroll Now</a>
                         </div>

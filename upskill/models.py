@@ -40,6 +40,7 @@ class Course(models.Model):
     subject = models.ForeignKey(Subject,related_name='course',on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255,unique=True)
+    price = models.DecimalField(max_digits=14,decimal_places=2,default=0)
     overview = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='images',null=True,blank=True)
