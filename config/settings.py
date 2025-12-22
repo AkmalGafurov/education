@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'upskill',
+    'user',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -155,3 +156,5 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_REDIRECT_URL ='/'
 LOGOUT_REDIRECT_URL ='/'
+
+AUTH_USER_MODEL = 'user.CustomUser'
